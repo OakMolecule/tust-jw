@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>上传计算机分级教学选课手册</title>
+
+    <!-- 360等国产高速浏览器支持 -->
+    <meta name="renderer" content="webkit">
+    <!-- 手机页面兼容 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/toastr.min.css">
+    <link rel="stylesheet" href="../css/uploadfile.css">
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/url.js"></script>
+    <script src="../js/checkper.js"></script>
+    <script>
+        checkPermissions("loginpage.html");
+    </script>
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target=".navbar-fixed-top .navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://tust.edu.cn">天津科技大学</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="uploadclass.html">班级选课</a></li>
+                <li><a href="uploadpe.html">体育选课</a></li>
+                <li><a href="uploadgeneral.html">通识课</a></li>
+                <li><a href="uploadlevel.html">英语、计算机分级名单</a></li>
+                <li><a href="uploadenglish.html">英语选课</a></li>
+                <li><a href="uploadcomputer.html">计算机选课</a></li>
+                <li><a href="uploadteacher.html">教师介绍</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container" style="margin-top: 70px">
+    <div class="page-header">
+        <h1>上传计算机分级教学选课手册</h1>
+    </div>
+    <div class="row">
+        <h3>班级选课</h3>
+        <input id="fileupload" type="file" name="file" multiple>
+
+        <div id="progress" class="progress">
+            <div class="bar progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+            </div>
+        </div>
+        <div id="button">
+            <div class="col-lg-6" id="start"></div>
+            <div class="col-lg-3" id="cancel"></div>
+        </div>
+    </div>
+</div>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/toastr.min.js"></script>
+<script src="../js/vendor/jquery.ui.widget.js"></script>
+<script src="../js/jquery.iframe-transport.js"></script>
+<script src="../js/jquery.fileupload.js"></script>
+<script>
+    var token = sessionStorage.getItem('token');
+    var input = document.querySelector('input');
+
+    // console.log(this.files);
+    // console.log("change");
+    $('#fileupload').fileupload({
+        url: sever_url + "uploadcomputer",
+        headers: {
+            "Authorization": token
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .bar').css(
+                'width',
+                progress + '%'
+            );
+            $('#progress .bar').html(progress + '%');
+        },
+        add: function (e, data) {
+            data.context = $('<button class="btn btn-primary"/>').html('<i class="glyphicon glyphicon-upload"></i>' + '<span>上传' + input.files[0].name + '</span>')
+                .appendTo(document.getElementById('start'))
+                .click(function () {
+                    data.context = $('<p/>').text('上传中...').replaceAll($(this));
+                    $('#cancel').html('');
+                    data.submit();
+                });
+
+            data.context = $('<button class="btn btn-warning"/>').html('<i class="glyphicon glyphicon-ban-circle"></i>' + '<span>取消</span>')
+                .appendTo(document.getElementById('cancel'))
+                .click(function () {
+                    location.reload(false);
+                    $('#start').html('');
+                    $('#cancel').html('');
+                });
+        },
+        done: function (e, data) {
+            console.log(e);
+            console.log(data);
+            data.context.text('上传完成');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            self.location = "loginpage.html";
+        }
+    });
+
+    $('#fileupload').bind('fileuploadprogress', function (e, data) {
+        // Log the current bitrate for this upload:
+        console.log(data.bitrate);
+        console.log(input.files);
+    })
+
+</script>
+</body>
+</html>

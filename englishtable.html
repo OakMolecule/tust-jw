@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>英语分级教学选课手册</title>
+
+    <!-- 360等国产高速浏览器支持 -->
+    <meta name="renderer" content="webkit">
+    <!-- 手机页面兼容 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="css/bootstrap-table.min.css">
+    <script src="js/url.js"></script>
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target=".navbar-fixed-top .navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://tust.edu.cn">天津科技大学</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="classtable.html">班级选课</a></li>
+                <li><a href="petable.html">体育选课</a></li>
+                <li><a href="generaltable.html">通识课</a></li>
+                <li><a href="leveltable.html">英语、计算机分级名单</a></li>
+                <li><a href="englishtable.html">英语选课</a></li>
+                <li><a href="computertable.html">计算机选课</a></li>
+                <li><a href="teachertable.html">教师介绍</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container" style="margin-top: 70px">
+    <h1>英语分级教学选课手册</h1>
+    <table id="table"
+           data-toggle="table"
+           data-pagination="true"
+           data-page-size="20"
+           data-search="true"
+           data-page-list="[10,15,20,25]"
+           data-pagination-first-text="首页"
+           data-pagination-pre-text="上一页"
+           data-pagination-next-text="下一页"
+           data-pagination-last-text="最后"
+           data-sort-name="class_id"
+           data-sort-order="asc"
+           data-show-columns="true"
+           data-key-events="true"
+           data-show-toggle="true"
+           data-show-pagination-switch="true"
+           data-show-refresh="true"
+           data-filter-control="true"
+           data-filter-show-clear="true">
+        <thead>
+        <tr>
+            <th data-field="faculty" data-filter-control="select" data-sortable="true">学院</th>
+            <th data-field="course_id" data-sortable="true">课程号</th>
+            <th data-field="course_num" data-sortable="true">课序号</th>
+            <th data-field="course_name" data-sortable="true">课程名</th>
+            <th data-field="course_teacher" data-sortable="true">教师</th>
+            <th data-field="remark" data-sortable="true">备注</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="js/bootstrap-table.min.js"></script>
+<!-- Latest compiled and minified Locales -->
+<script src="js/bootstrap-table-zh-CN.min.js"></script>
+<script src="js/url.js"></script>
+<script>
+    $('#table').bootstrapTable({
+        url: sever_url + 'searchenglish/'
+    });
+</script>
+</body>
+</html>
